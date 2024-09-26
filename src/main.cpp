@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <Adafruit_AHTX0.h>
-#include <Adafruit_ENS160.h>
+#include <ScioSense_ENS160.h>
 
 // Initialize the I2C LCD (16x2)
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -10,7 +10,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 Adafruit_AHTX0 aht;
 
 // Initialize the ENS160 CO2 sensor
-Adafruit_ENS160 ens160;
+ScioSense_ENS160 ens160;
 
 // Global variables to store sensor data
 float temperature = 0.0;
@@ -50,20 +50,10 @@ void setup() {
 
 void loop() {
   readSensors();
-
-  // Display sensor values on the LCD
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Temp: ");
-  lcd.print(temperature);
-  lcd.print(" C");
-
-  lcd.setCursor(0, 1);
-  lcd.print("Humidity: ");
-  lcd.print(humidity);
-  lcd.print(" %");
-
-  delay(3000);
+  lcd.print("READ SENSORS");
+  delay(500);
 
   // Display CO2 sensor reading on the LCD
   lcd.clear();
@@ -85,6 +75,7 @@ void loop() {
   Serial.println(" ppm");
 
   delay(3000);
+
 }
 
 // Function to read sensor values
@@ -97,6 +88,5 @@ void readSensors() {
   humidity = humidity_event.relative_humidity;
 
   // Get CO2 sensor reading from ENS160
-  ens160.setMode(ENS160_MODE_STANDARD);
   co2 = ens160.getECO2();
 }
