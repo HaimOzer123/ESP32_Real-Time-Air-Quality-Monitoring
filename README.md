@@ -11,6 +11,14 @@ This system monitors the following environmental conditions:
 - **Temperature & Humidity**: Using the AHT21 sensor.
 - **Display**: Information is displayed on a 16x2 I2C LCD screen.
 
+### Video Presentation:
+Watch the video presentation of the project for an overview of the real-time air quality monitoring system in action.
+Check out the [video presentation of the project](https://drive.google.com/file/d/13vhrw3RD76HinZ9N-YI6pjBKKC9hIGsp/view?usp=sharing).
+
+### Wiring Diagram:
+wiring images on the breadboard to understand how the components are physically connected.
+Check out the [wiring images](https://drive.google.com/file/d/10cAnoR2bWLvjFiA64zY_UB2dPf7xNp7n/view?usp=sharing).
+
 ### Technologies Used:
 - **ESP32-WROOM-32D** microcontroller for real-time data processing
 - **C++** for firmware development
