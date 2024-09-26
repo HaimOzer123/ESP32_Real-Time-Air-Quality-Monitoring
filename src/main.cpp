@@ -3,10 +3,10 @@
 #include <Adafruit_AHTX0.h>
 #include <ScioSense_ENS160.h>
 
-// Initialize the I2C LCD (16x2)
+// Initialize the I2C LCD (16x2) with updated SDA and SCL pins
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-// Initialize the AHT21 sensor
+// Initialize the AHT21 sensor (temperature and humidity)
 Adafruit_AHTX0 aht;
 
 // Initialize the ENS160 CO2 sensor
@@ -21,21 +21,25 @@ void setup() {
   // Initialize Serial Monitor for debugging
   Serial.begin(115200);
 
+  // Set up I2C pins
+  Wire.begin(4, 16);  // LCD I2C: SDA = D4, SCL = D16
+
   // Initialize LCD
   lcd.begin();
   lcd.backlight();
   lcd.setCursor(0, 0);
   lcd.print("Initializing...");
 
-  // Initialize AHT21 sensor
-  if (!aht.begin()) {
+  // Initialize AHT21 sensor on D12 (SDA) and D13 (SCL)
+  if (!aht.begin(&Wire, 0x38)) {
     Serial.println("Failed to initialize AHT21 sensor!");
     lcd.setCursor(0, 1);
     lcd.print("AHT Fail");
     while (1);
   }
 
-  // Initialize ENS160 sensor
+  // Initialize ENS160 sensor on D12 (SDA), D13 (SCL), ADD = D14, CS = D27, NT = D26
+  ens160.begin(12, 13, 14, 27, 26);  // Update with correct pin mapping
   if (!ens160.begin()) {
     Serial.println("Failed to initialize ENS160 CO2 sensor!");
     lcd.setCursor(0, 1);
@@ -75,7 +79,6 @@ void loop() {
   Serial.println(" ppm");
 
   delay(3000);
-
 }
 
 // Function to read sensor values
